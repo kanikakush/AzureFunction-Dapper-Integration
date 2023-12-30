@@ -1,4 +1,8 @@
 using System;
+using AzureFunWithDapper.Context;
+using AzureFunWithDapper.Utilities;
+using Dapper;
+using System.Data;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 
@@ -7,17 +11,31 @@ namespace AzureFunWithDapper.AzureFunctions
     public class RemoveInActiveNasher
     {
         private readonly ILogger _logger;
+        private readonly DapperContext _dapperContext;
 
-        public RemoveInActiveNasher(ILoggerFactory loggerFactory)
+        public RemoveInActiveNasher(ILoggerFactory loggerFactory, DapperContext dapperContext)
         {
             _logger = loggerFactory.CreateLogger<RemoveInActiveNasher>();
+            _dapperContext = dapperContext;
         }
 
         [Function("RemoveInActiveNasher")]
-        public void Run([TimerTrigger("0 */5 * * * *")] MyInfo myTimer)
+        public async Task<string> Run([TimerTrigger("0 */5 * * * *")] MyInfo myTimer)
         {
             _logger.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
-            _logger.LogInformation($"Next timer schedule at: {myTimer.ScheduleStatus.Next}");
+            try
+            {
+                var query = "DELETE FROM NasherDetails WHERE IsActive = 0";              
+                using (var connection = _dapperContext.CreateConnection())
+                {
+                    var p = await connection.ExecuteAsync(query);
+                    return "Inactive Nashers Deleted Successfully";
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 

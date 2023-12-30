@@ -1,0 +1,8 @@
+{
+    "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
+    "SqlConnection": "Data Source=DESKTOP-0GIN93H\\SQLEXPRESS;Initial Catalog=NashTechDB;Integrated Security=True; TrustServerCertificate=True"
+  }
+}

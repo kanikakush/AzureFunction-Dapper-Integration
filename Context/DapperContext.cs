@@ -12,25 +12,12 @@ namespace AzureFunWithDapper.Context
 {
     public class DapperContext
     {
-        //private readonly IConfiguration _configuration;
         private readonly string _connectionString;
-
         public DapperContext()
         {
-            //_configuration = configuration;
             _connectionString = Environment.GetEnvironmentVariable("SqlConnection");
         }
-
         public IDbConnection CreateConnection()
             => new SqlConnection(_connectionString);
     }
 }
-//1.GetNasherList(Http Trigger)
-
-//    2.CreateNasher(Http Trigger)
-
-//    3.GetNasherByID(Http Trigger)
-
-//    4.UpdateNasheDetails(Http Trigger)
-
-//    5.RemoveInActiveNasher(Timetrigger)

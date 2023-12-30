@@ -27,9 +27,10 @@ namespace AzureFunWithDapper
             _logger.LogInformation("C# HTTP trigger function processed a request.");
             try
             {
+                var query = "SELECT NasherID, FirstName, LastName, Department, Email, ContactNumber, GitURL, LinkedInURL, IsActive  FROM NashTechDB.dbo.NasherDetails";
                 using (var connection = _dapperContext.CreateConnection())
                 {
-                   var result = await connection.QueryAsync<NasherDetails>("SELECT NasherID, FirstName, LastName, Department, Email, ContactNumber, GitURL, LinkedInURL, IsActive  FROM NashTechDB.dbo.NasherDetails");
+                   var result = await connection.QueryAsync<NasherDetails>(query);
                    return result.ToList();
                 }
             }
