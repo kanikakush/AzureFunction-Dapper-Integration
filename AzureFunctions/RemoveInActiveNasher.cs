@@ -20,7 +20,9 @@ namespace AzureFunWithDapper.AzureFunctions
         }
 
         [Function("RemoveInActiveNasher")]
-        public async Task<string> Run([TimerTrigger("0 */5 * * * *")] MyInfo myTimer)
+        //0 */2 * * * * minute divide by 2
+        //* * * * * * *
+        public async Task<string> Run([TimerTrigger("0 35 16 * * *")] MyInfo myTimer)
         {
             _logger.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
             try
